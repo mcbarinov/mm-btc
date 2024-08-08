@@ -1,15 +1,17 @@
 from typing import Annotated
 
 import typer
+import typer.core
 from mm_std import print_plain
 
 from mm_btc.cli import cli_utils
-from mm_btc.cli.cmd import mnemonic_cmd
+from mm_btc.cli.cmd import address_cmd, mnemonic_cmd
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False, add_completion=False)
 
 
-@app.command(name="mnemonic", help="Generate keys based on a mnemonic")
+@app.command("mnemonic")
+@app.command(name="m", hidden=True)
 def mnemonic_command(  # nosec B107:hardcoded_password_default
     mnemonic: Annotated[str, typer.Option("--mnemonic", "-m", help="")] = "",
     passphrase: Annotated[str, typer.Option("--passphrase", "-p")] = "",
@@ -19,6 +21,7 @@ def mnemonic_command(  # nosec B107:hardcoded_password_default
     limit: int = typer.Option(10, "--limit", "-l"),
     testnet: bool = typer.Option(False, "--testnet", "-t", help="Testnet network"),
 ) -> None:
+    """Generate keys based on a mnemonic"""
     mnemonic_cmd.run(
         mnemonic_cmd.Args(
             mnemonic=mnemonic,
@@ -32,9 +35,16 @@ def mnemonic_command(  # nosec B107:hardcoded_password_default
     )
 
 
+@app.command(name="address")
+@app.command(name="a", hidden=True)
+def address_command(address: str) -> None:
+    """Get address info from Blockstream API"""
+    address_cmd.run(address)
+
+
 def version_callback(value: bool) -> None:
     if value:
-        print_plain(f"mm-eth version: {cli_utils.get_version()}")
+        print_plain(f"mm-btc: v{cli_utils.get_version()}")
         raise typer.Exit()
 
 

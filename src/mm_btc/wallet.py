@@ -60,3 +60,7 @@ def mnemonic_words_to_strenght(words: int) -> int:
         return 256
 
     raise ValueError("Invalid words")
+
+
+def is_testnet_address(address: str) -> bool:
+    return address.startswith(("m", "n", "tb1"))
