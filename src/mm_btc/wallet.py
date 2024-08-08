@@ -14,6 +14,7 @@ BIP84_TESTNET_PATH = "m/84'/1'/0'/0"
 class Account:
     address: str
     private: str
+    wif: str
     path: str
 
 
@@ -40,7 +41,7 @@ def derive_accounts(mnemonic: str, passphrase: str, path: str, limit: int) -> li
     accounts = []
     for index_path in range(limit):
         w.from_path(path=f"{path}/{index_path}")
-        accounts.append(Account(address=w.address(), private=w.wif(), path=f"{path}/{index_path}"))
+        accounts.append(Account(address=w.address(), private=w.private_key(), wif=w.wif(), path=f"{path}/{index_path}"))
         w.clean_derivation()
 
     return accounts

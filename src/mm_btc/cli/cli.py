@@ -12,8 +12,9 @@ app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False, add_comp
 @app.command(name="mnemonic", help="Generate keys based on a mnemonic")
 def mnemonic_command(  # nosec B107:hardcoded_password_default
     mnemonic: Annotated[str, typer.Option("--mnemonic", "-m", help="")] = "",
-    passphrase: Annotated[str, typer.Option("--passphrase", "-pass")] = "",
+    passphrase: Annotated[str, typer.Option("--passphrase", "-p")] = "",
     path: Annotated[str, typer.Option("--path", help="Derivation path. Examples: bip44, bip88, m/44'/0'/0'/0")] = "bip44",
+    hex_: Annotated[bool, typer.Option("--hex", help="Print private key in hex format instead of WIF")] = False,
     words: int = typer.Option(12, "--words", "-w", help="Number of mnemonic words"),
     limit: int = typer.Option(10, "--limit", "-l"),
     testnet: bool = typer.Option(False, "--testnet", "-t", help="Testnet network"),
@@ -25,6 +26,7 @@ def mnemonic_command(  # nosec B107:hardcoded_password_default
             words=words,
             limit=limit,
             path=path,
+            hex=hex_,
             testnet=testnet,
         )
     )

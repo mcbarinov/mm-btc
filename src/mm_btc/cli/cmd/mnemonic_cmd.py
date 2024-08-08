@@ -1,8 +1,14 @@
 from dataclasses import dataclass
+from enum import Enum
 
 from mm_std import print_plain
 
 from mm_btc.wallet import derive_accounts, generate_mnemonic
+
+
+class PrivateType(str, Enum):
+    hex = "hex"
+    wif = "wif"
 
 
 @dataclass
@@ -11,6 +17,7 @@ class Args:
     passphrase: str
     words: int
     limit: int
+    hex: bool  # Print private key in hex format instead of WIF
     path: str
     testnet: bool
 
@@ -21,10 +28,12 @@ def run(args: Args) -> None:
     path = get_derivation_path_prefix(args.path, args.testnet)
     accounts = derive_accounts(mnemonic, passphrase, path, args.limit)
 
-    print_plain(f"mnemonic: {mnemonic}")
-    print_plain(f"passphrase: {passphrase}")
+    print_plain(f"{mnemonic}")
+    if passphrase:
+        print_plain(f"{passphrase}")
     for acc in accounts:
-        print_plain(f"{acc.path} {acc.address} {acc.private}")
+        private = acc.private if args.hex else acc.wif
+        print_plain(f"{acc.path} {acc.address} {private}")
 
 
 def get_derivation_path_prefix(path: str, testnet: bool) -> str:
