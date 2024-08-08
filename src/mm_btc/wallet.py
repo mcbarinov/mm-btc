@@ -17,7 +17,8 @@ class Account:
     path: str
 
 
-def generate_mnemonic(language: str = "english", strength: int = 128) -> str:
+def generate_mnemonic(language: str = "english", words: int = 12) -> str:
+    strength = mnemonic_words_to_strenght(words)
     return new_mnemonic(language=language, strength=strength)  # type: ignore[no-any-return]
 
 
@@ -43,3 +44,18 @@ def derive_accounts(mnemonic: str, passphrase: str, path: str, limit: int) -> li
         w.clean_derivation()
 
     return accounts
+
+
+def mnemonic_words_to_strenght(words: int) -> int:
+    if words == 12:
+        return 128
+    if words == 15:
+        return 160
+    if words == 18:
+        return 192
+    if words == 21:
+        return 224
+    if words == 24:
+        return 256
+
+    raise ValueError("Invalid words")

@@ -2,14 +2,22 @@
 #    uv pip compile -o requirements.txt pyproject.toml
 annotated-types==0.7.0
     # via pydantic
+base58==2.1.1
+    # via hdwallet
 certifi==2024.7.4
     # via requests
 cffi==1.17.0
     # via cryptography
 charset-normalizer==3.3.2
     # via requests
+click==8.1.7
+    # via typer
 cryptography==43.0.0
     # via mm-std
+ecdsa==0.19.0
+    # via hdwallet
+hdwallet==2.2.1
+    # via mm-btc (pyproject.toml)
 idna==3.7
     # via requests
 markdown-it-py==3.0.0
@@ -18,8 +26,12 @@ mdurl==0.1.2
     # via markdown-it-py
 mm-std==0.1.0
     # via mm-btc (pyproject.toml)
+mnemonic==0.21
+    # via hdwallet
 pycparser==2.22
     # via cffi
+pycryptodome==3.20.0
+    # via hdwallet
 pydantic==2.8.2
     # via mm-std
 pydantic-core==2.20.1
@@ -39,13 +51,22 @@ pyyaml==6.0.2
 requests==2.32.3
     # via mm-std
 rich==13.7.1
-    # via mm-std
+    # via
+    #   mm-std
+    #   typer
+shellingham==1.5.4
+    # via typer
 six==1.16.0
-    # via python-dateutil
+    # via
+    #   ecdsa
+    #   python-dateutil
+typer==0.12.3
+    # via mm-btc (pyproject.toml)
 typing-extensions==4.12.2
     # via
     #   pydantic
     #   pydantic-core
     #   pydash
+    #   typer
 urllib3==2.2.2
     # via requests

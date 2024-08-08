@@ -9,7 +9,7 @@ from mm_btc.wallet import (
 
 
 def test_generate_mnemonic():
-    mnemonic = generate_mnemonic(strength=256)
+    mnemonic = generate_mnemonic(words=24)
     assert len(mnemonic.split()) == 24
 
     assert generate_mnemonic() != generate_mnemonic()
