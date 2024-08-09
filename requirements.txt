@@ -8,6 +8,8 @@ base58==2.1.1
     # via hdwallet
 bit==0.8.0
     # via mm-btc (pyproject.toml)
+bitcoinlib==0.6.15
+    # via mm-btc (pyproject.toml)
 certifi==2024.7.4
     # via requests
 cffi==1.17.0
@@ -23,7 +25,11 @@ coincurve==20.0.0
 cryptography==43.0.0
     # via mm-std
 ecdsa==0.19.0
-    # via hdwallet
+    # via
+    #   bitcoinlib
+    #   hdwallet
+fastecdsa==2.3.2
+    # via bitcoinlib
 hdwallet==2.2.1
     # via mm-btc (pyproject.toml)
 idna==3.7
@@ -36,10 +42,14 @@ mm-std==0.1.0
     # via mm-btc (pyproject.toml)
 mnemonic==0.21
     # via hdwallet
+numpy==2.0.1
+    # via bitcoinlib
 pycparser==2.22
     # via cffi
 pycryptodome==3.20.0
-    # via hdwallet
+    # via
+    #   bitcoinlib
+    #   hdwallet
 pydantic==2.8.2
     # via mm-std
 pydantic-core==2.20.1
@@ -59,6 +69,7 @@ pyyaml==6.0.2
 requests==2.32.3
     # via
     #   bit
+    #   bitcoinlib
     #   mm-std
 rich==13.7.1
     # via
@@ -70,6 +81,8 @@ six==1.16.0
     # via
     #   ecdsa
     #   python-dateutil
+sqlalchemy==2.0.32
+    # via bitcoinlib
 typer==0.12.3
     # via mm-btc (pyproject.toml)
 typing-extensions==4.12.2
@@ -77,6 +90,7 @@ typing-extensions==4.12.2
     #   pydantic
     #   pydantic-core
     #   pydash
+    #   sqlalchemy
     #   typer
 urllib3==2.2.2
     # via requests

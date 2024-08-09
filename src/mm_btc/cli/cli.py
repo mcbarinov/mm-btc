@@ -6,7 +6,7 @@ import typer.core
 from mm_std import print_plain
 
 from mm_btc.cli import cli_utils
-from mm_btc.cli.cmd import address_cmd, create_tx_cmd, mnemonic_cmd
+from mm_btc.cli.cmd import address_cmd, create_tx_cmd, decode_tx_cmd, mnemonic_cmd
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False, add_completion=False)
 
@@ -47,6 +47,12 @@ def address_command(address: str) -> None:
 def create_tx_command(config_path: Annotated[Path, typer.Argument(exists=True)]) -> None:
     """Create a transaction"""
     create_tx_cmd.run(config_path)
+
+
+@app.command("decode-tx")
+def decode_tx_command(tx_hex: str, testnet: Annotated[bool, typer.Option("--testnet", "-t")] = False) -> None:
+    """Decode a transaction"""
+    decode_tx_cmd.run(tx_hex, testnet)
 
 
 def version_callback(value: bool) -> None:
