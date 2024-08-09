@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Annotated
 
 import typer
@@ -5,7 +6,7 @@ import typer.core
 from mm_std import print_plain
 
 from mm_btc.cli import cli_utils
-from mm_btc.cli.cmd import address_cmd, mnemonic_cmd
+from mm_btc.cli.cmd import address_cmd, create_tx_cmd, mnemonic_cmd
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False, add_completion=False)
 
@@ -40,6 +41,12 @@ def mnemonic_command(  # nosec B107:hardcoded_password_default
 def address_command(address: str) -> None:
     """Get address info from Blockstream API"""
     address_cmd.run(address)
+
+
+@app.command("create-tx")
+def create_tx_command(config_path: Annotated[Path, typer.Argument(exists=True)]) -> None:
+    """Create a transaction"""
+    create_tx_cmd.run(config_path)
 
 
 def version_callback(value: bool) -> None:

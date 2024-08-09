@@ -5,6 +5,7 @@ description = ""
 dependencies = [
     "mm-std~=0.1.0",
     "hdwallet~=2.2.1",
+    "bit~=0.8.0",
     "typer~=0.12.3"
 ]
 requires-python = ">=3.12"
@@ -39,7 +40,7 @@ warn_no_return = false
 strict = true
 exclude = ["^tests/", "^tmp/"]
 [[tool.mypy.overrides]]
-module = ["hdwallet.*", "hdwallet.symbols.*", "telebot.util.*"]
+module = ["hdwallet.*", "hdwallet.symbols.*", "bit.*"]
 ignore_missing_imports = true
 
 

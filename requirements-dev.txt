@@ -2,10 +2,14 @@
 #    uv pip compile -o requirements-dev.txt --extra=dev pyproject.toml
 annotated-types==0.7.0
     # via pydantic
+asn1crypto==1.5.1
+    # via coincurve
 bandit==1.7.9
     # via mm-btc (pyproject.toml)
 base58==2.1.1
     # via hdwallet
+bit==0.8.0
+    # via mm-btc (pyproject.toml)
 boolean-py==4.0
     # via license-expression
 build==1.2.1
@@ -15,11 +19,15 @@ cachecontrol==0.14.0
 certifi==2024.7.4
     # via requests
 cffi==1.17.0
-    # via cryptography
+    # via
+    #   coincurve
+    #   cryptography
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via typer
+coincurve==20.0.0
+    # via bit
 coverage==7.6.1
     # via mm-btc (pyproject.toml)
 cryptography==43.0.0
@@ -142,6 +150,7 @@ readme-renderer==44.0
     # via twine
 requests==2.32.3
     # via
+    #   bit
     #   cachecontrol
     #   mm-std
     #   pip-audit
