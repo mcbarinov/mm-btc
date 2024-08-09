@@ -1,6 +1,6 @@
 [project]
 name = "mm-btc"
-version = "0.0.5"
+version = "0.0.6"
 description = ""
 dependencies = [
     "mm-std~=0.1.0",
