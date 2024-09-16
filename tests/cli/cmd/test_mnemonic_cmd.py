@@ -1,6 +1,7 @@
 import pytest
-from mm_btc.cli.cmd.mnemonic_cmd import get_derivation_path_prefix
 from mm_std import run_command
+
+from mm_btc.cli.cmd.mnemonic_cmd import get_derivation_path_prefix
 
 
 def test_get_derivation_path_prefix():

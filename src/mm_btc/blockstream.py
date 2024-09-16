@@ -14,6 +14,13 @@ ERROR_INVALID_NETWORK = "INVALID_NETWORK"
 Proxy: TypeAlias = str | Sequence[str] | None
 
 
+class Mempool(BaseModel):
+    count: int
+    vsize: int
+    total_fee: int
+    fee_histogram: list[tuple[float, int]]
+
+
 class Address(BaseModel):
     class ChainStats(BaseModel):
         funded_txo_count: int
@@ -83,6 +90,18 @@ class BlockstreamClient:
                 res = self._request(f"/address/{address}/utxo")
                 data = res.to_dict()
                 return Ok([Utxo(**out) for out in res.json], data=data)
+            except Exception as err:
+                result = Err(err, data=data)
+        return result
+
+    def get_mempool(self) -> Result[Mempool]:
+        result: Result[Mempool] = Err("not started yet")
+        data = None
+        for _ in range(self.attempts):
+            try:
+                res = self._request("/mempool")
+                data = res.to_dict()
+                return Ok(Mempool(**res.json), data=data)
             except Exception as err:
                 result = Err(err, data=data)
         return result
