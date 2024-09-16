@@ -558,17 +558,13 @@ wheels = [
 
 [[package]]
 name = "mm-btc"
-version = "0.1.1"
+version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "bit" },
     { name = "bitcoinlib" },
     { name = "hdwallet" },
     { name = "mm-std" },
-]
-
-[package.optional-dependencies]
-cli = [
     { name = "typer" },
 ]
 
@@ -592,7 +588,7 @@ requires-dist = [
     { name = "bitcoinlib", specifier = "~=0.6.15" },
     { name = "hdwallet", specifier = "~=2.2.1" },
     { name = "mm-std", specifier = "~=0.1.2" },
-    { name = "typer", marker = "extra == 'cli'", specifier = "~=0.12.5" },
+    { name = "typer", specifier = "~=0.12.5" },
 ]
 
 [package.metadata.requires-dev]
