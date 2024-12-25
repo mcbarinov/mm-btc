@@ -3,7 +3,7 @@ from enum import Enum
 
 from mm_std import print_plain
 
-from mm_btc.wallet import derive_accounts, generate_mnemonic
+from mm_btc.wallet import AddressType, derive_accounts, generate_mnemonic
 
 
 class PrivateType(str, Enum):
@@ -18,6 +18,7 @@ class Args:
     words: int
     limit: int
     hex: bool  # Print private key in hex format instead of WIF
+    address_type: AddressType
     path: str
     testnet: bool
 
@@ -26,7 +27,7 @@ def run(args: Args) -> None:
     mnemonic = args.mnemonic or generate_mnemonic()
     passphrase = args.passphrase
     path = get_derivation_path_prefix(args.path, args.testnet)
-    accounts = derive_accounts(mnemonic, passphrase, path, args.limit)
+    accounts = derive_accounts(mnemonic, passphrase, path, args.address_type, args.limit)
 
     print_plain(f"{mnemonic}")
     if passphrase:
