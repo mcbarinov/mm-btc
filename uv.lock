@@ -222,6 +222,18 @@ wheels = [
 ]
 
 [[package]]
+name = "click"
+version = "8.1.8"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a", size = 226593 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7e/d4/7ebdbd03970677812aac39c869717059dbb71a4cfc033ca6e5221787892c/click-8.1.8-py3-none-any.whl", hash = "sha256:63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2", size = 98188 },
+]
+
+[[package]]
 name = "coincurve"
 version = "20.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -598,6 +610,7 @@ dependencies = [
     { name = "hdwallet" },
     { name = "mm-std" },
     { name = "mnemonic" },
+    { name = "typer" },
 ]
 
 [package.dev-dependencies]
@@ -617,8 +630,9 @@ requires-dist = [
     { name = "bit", specifier = "~=0.8.0" },
     { name = "bitcoinlib", specifier = "~=0.7.1" },
     { name = "hdwallet", specifier = "~=3.2.3" },
-    { name = "mm-std", specifier = "~=0.1.10" },
-    { name = "mnemonic", specifier = ">=0.21" },
+    { name = "mm-std", specifier = "~=0.1.11" },
+    { name = "mnemonic", specifier = "~=0.21" },
+    { name = "typer", specifier = "~=0.15.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -635,7 +649,7 @@ dev = [
 
 [[package]]
 name = "mm-std"
-version = "0.1.10"
+version = "0.1.11"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
@@ -647,7 +661,7 @@ dependencies = [
     { name = "rich" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/30/ad/0fcb4791f823b4190dd8cc0f0b1fe81b3c492067b7e8c124ea162ece732c/mm_std-0.1.10-py3-none-any.whl", hash = "sha256:5be05a5430405ea61ae44c444cdbfb17a242fccdcab720e789b3084eef9ff65c", size = 14448 },
+    { url = "https://files.pythonhosted.org/packages/45/44/9b5b90015a3aa2906f1eb15a4d4404635f6b05e43c5023b770bd4c7d7774/mm_std-0.1.11-py3-none-any.whl", hash = "sha256:3ea736ccb313bf6d0c37272104ba1f79deb0874c07bd6091d504fcf9e703cdfe", size = 14444 },
 ]
 
 [[package]]
@@ -1122,6 +1136,15 @@ wheels = [
 ]
 
 [[package]]
+name = "shellingham"
+version = "1.5.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/15/8b3609fd3830ef7b27b655beb4b4e9c62313a4e8da8c676e142cc210d58e/shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de", size = 10310 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686", size = 9755 },
+]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1205,6 +1228,21 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/be/ba/1f744cdc819428fc6b5084ec34d9b30660f6f9daaf70eead706e3203ec3c/toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f", size = 22253 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/44/6f/7120676b6d73228c96e17f1f794d8ab046fc910d781c8d151120c3f1569e/toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b", size = 16588 },
+]
+
+[[package]]
+name = "typer"
+version = "0.15.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "rich" },
+    { name = "shellingham" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cb/ce/dca7b219718afd37a0068f4f2530a727c2b74a8b6e8e0c0080a4c0de4fcd/typer-0.15.1.tar.gz", hash = "sha256:a0588c0a7fa68a1978a069818657778f86abe6ff5ea6abf472f940a08bfe4f0a", size = 99789 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d0/cc/0a838ba5ca64dc832aa43f727bd586309846b0ffb2ce52422543e6075e8a/typer-0.15.1-py3-none-any.whl", hash = "sha256:7994fb7b8155b64d3402518560648446072864beefd44aa2dc36972a5972e847", size = 44908 },
 ]
 
 [[package]]

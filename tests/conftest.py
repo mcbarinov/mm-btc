@@ -1,5 +1,6 @@
 import pytest
 from mm_std import get_dotenv, hr
+from typer.testing import CliRunner
 
 
 @pytest.fixture()
@@ -32,3 +33,8 @@ def proxies() -> list[str]:
         except KeyError:
             pass
     return []
+
+
+@pytest.fixture
+def cli_runner() -> CliRunner:
+    return CliRunner()
