@@ -1,5 +1,4 @@
 from collections.abc import Sequence
-from typing import TypeAlias
 
 from mm_std import Err, HResponse, Ok, Result, hr
 from mm_std.random_ import random_str_choice
@@ -11,7 +10,7 @@ TESTNET_BASE_URL = "https://blockstream.info/testnet/api"
 ERROR_INVALID_ADDRESS = "INVALID_ADDRESS"
 ERROR_INVALID_NETWORK = "INVALID_NETWORK"
 
-Proxy: TypeAlias = str | Sequence[str] | None
+type Proxy = str | Sequence[str] | None
 
 
 class Mempool(BaseModel):
@@ -54,7 +53,7 @@ class Utxo(BaseModel):
 
 
 class BlockstreamClient:
-    def __init__(self, testnet: bool = False, timeout: int = 10, proxies: Proxy = None, attempts: int = 1):
+    def __init__(self, testnet: bool = False, timeout: int = 10, proxies: Proxy = None, attempts: int = 1) -> None:
         self.testnet = testnet
         self.timeout = timeout
         self.proxies = proxies
@@ -72,7 +71,7 @@ class BlockstreamClient:
                     "invalid bitcoin address" in res.body.lower() or "bech32 segwit decoding error" in res.body.lower()
                 ):
                     return Err(ERROR_INVALID_ADDRESS, data=data)
-                elif res.code == 400 and "invalid network" in res.body.lower():
+                if res.code == 400 and "invalid network" in res.body.lower():
                     return Err(ERROR_INVALID_NETWORK, data=data)
                 return Ok(Address(**res.json), data=data)
             except Exception as err:

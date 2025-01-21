@@ -39,13 +39,9 @@ def generate_mnemonic(language: str = "english", words: int = 12) -> str:
 
 def derive_accounts(mnemonic: str, passphrase: str, path_prefix: str, address_type: AddressType, limit: int) -> list[Account]:
     coin = Bitcoin
-    if path_prefix.startswith("m/84'/1'"):
+    if path_prefix.startswith(("m/84'/1'", "m/44'/1'")):
         network = coin.NETWORKS.TESTNET
-    elif path_prefix.startswith("m/44'/1'"):
-        network = coin.NETWORKS.TESTNET
-    elif path_prefix.startswith("m/84'/0'"):
-        network = coin.NETWORKS.MAINNET
-    elif path_prefix.startswith("m/44'/0'"):
+    elif path_prefix.startswith(("m/84'/0'", "m/44'/0'")):
         network = coin.NETWORKS.MAINNET
     else:
         raise ValueError("Invalid path")
