@@ -7,8 +7,10 @@ from pydantic import BaseModel
 MAINNET_BASE_URL = "https://blockstream.info/api"
 TESTNET_BASE_URL = "https://blockstream.info/testnet/api"
 
-ERROR_INVALID_ADDRESS = "INVALID_ADDRESS"
-ERROR_INVALID_NETWORK = "INVALID_NETWORK"
+# ERROR_INVALID_ADDRESS = "INVALID_ADDRESS"
+# ERROR_INVALID_NETWORK = "INVALID_NETWORK"
+
+ERROR_400_BAD_REQUEST = "400 Bad Request"
 
 type Proxy = str | Sequence[str] | None
 
@@ -67,12 +69,8 @@ class BlockstreamClient:
             try:
                 res = self._request(f"/address/{address}")
                 data = res.to_dict()
-                if res.code == 400 and (
-                    "invalid bitcoin address" in res.body.lower() or "bech32 segwit decoding error" in res.body.lower()
-                ):
-                    return Err(ERROR_INVALID_ADDRESS, data=data)
-                if res.code == 400 and "invalid network" in res.body.lower():
-                    return Err(ERROR_INVALID_NETWORK, data=data)
+                if res.code == 400:
+                    return Err("400 Bad Request", data=data)
                 return Ok(Address(**res.json), data=data)
             except Exception as err:
                 result = Err(err, data=data)

@@ -3,7 +3,6 @@ from pathlib import Path
 from bit import PrivateKey, PrivateKeyTestnet
 from mm_std import BaseConfig, print_console
 
-from mm_btc.cli.cli_utils import read_config
 from mm_btc.wallet import is_testnet_address
 
 
@@ -18,7 +17,7 @@ class Config(BaseConfig):
 
 
 def run(config_path: Path) -> None:
-    config = read_config(Config, config_path)
+    config = Config.read_toml_config_or_exit(config_path)
     testnet = is_testnet_address(config.from_address)
     key = PrivateKeyTestnet(config.private) if testnet else PrivateKey(config.private)
 

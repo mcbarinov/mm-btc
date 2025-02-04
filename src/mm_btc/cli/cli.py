@@ -1,3 +1,4 @@
+import importlib.metadata
 from pathlib import Path
 from typing import Annotated
 
@@ -7,7 +8,6 @@ from mm_std import print_plain
 
 from mm_btc.wallet import AddressType
 
-from . import cli_utils
 from .cmd import address_cmd, create_tx_cmd, decode_tx_cmd, mnemonic_cmd, utxo_cmd
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False, add_completion=False)
@@ -67,7 +67,7 @@ def utxo_command(address: str) -> None:
 
 def version_callback(value: bool) -> None:
     if value:
-        print_plain(f"mm-btc: v{cli_utils.get_version()}")
+        print_plain(f"mm-btc: v{importlib.metadata.version('mm-btc')}")
         raise typer.Exit
 
 
