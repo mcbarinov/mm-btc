@@ -1,3 +1,4 @@
+import asyncio
 import importlib.metadata
 from pathlib import Path
 from typing import Annotated
@@ -44,7 +45,7 @@ def mnemonic_command(  # nosec B107:hardcoded_password_default
 @app.command(name="a", hidden=True)
 def address_command(address: str) -> None:
     """Get address info from Blockstream API"""
-    address_cmd.run(address)
+    asyncio.run(address_cmd.run(address))
 
 
 @app.command("create-tx")
@@ -62,7 +63,7 @@ def decode_tx_command(tx_hex: str, testnet: Annotated[bool, typer.Option("--test
 @app.command("utxo")
 def utxo_command(address: str) -> None:
     """Get UTXOs from Blockstream API"""
-    utxo_cmd.run(address)
+    asyncio.run(utxo_cmd.run(address))
 
 
 def version_callback(value: bool) -> None:

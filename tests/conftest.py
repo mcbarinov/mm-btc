@@ -1,5 +1,6 @@
 import pytest
-from mm_std import get_dotenv, hr
+from mm_crypto_utils.proxy import fetch_proxies_or_fatal_sync
+from mm_std import get_dotenv
 from typer.testing import CliRunner
 
 
@@ -25,14 +26,7 @@ def binance_address() -> str:
 
 @pytest.fixture
 def proxies() -> list[str]:
-    proxies_url = get_dotenv("PROXIES_URL")
-    if proxies_url:
-        res = hr(proxies_url)
-        try:
-            return res.json["proxies"]
-        except KeyError:
-            pass
-    return []
+    return fetch_proxies_or_fatal_sync(get_dotenv("PROXIES_URL"))
 
 
 @pytest.fixture

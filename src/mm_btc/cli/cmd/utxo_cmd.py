@@ -4,8 +4,7 @@ from mm_btc.blockstream import BlockstreamClient
 from mm_btc.wallet import is_testnet_address
 
 
-def run(address: str) -> None:
+async def run(address: str) -> None:
     client = BlockstreamClient(testnet=is_testnet_address(address))
-    res = client.get_utxo(address)
-
-    print_json(res.ok_or_err())
+    res = await client.get_utxo(address)
+    print_json(res.ok_or_error())
