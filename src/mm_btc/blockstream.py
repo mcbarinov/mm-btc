@@ -62,40 +62,40 @@ class BlockstreamClient:
         self.base_url = TESTNET_BASE_URL if testnet else MAINNET_BASE_URL
 
     async def get_address(self, address: str) -> Result[Address]:
-        result: Result[Address] = Result.failure("not started yet")
+        result: Result[Address] = Result.err("not started yet")
         for _ in range(self.attempts):
             res = await self._request(f"/address/{address}")
             try:
                 if res.status_code == 400:
-                    return res.to_result_failure("400 Bad Request")
-                return res.to_result_success(Address(**res.parse_json_body()))
+                    return res.to_err_result("400 Bad Request")
+                return res.to_ok_result(Address(**res.parse_json_body()))
             except Exception as e:
-                result = res.to_result_failure(e)
+                result = res.to_err_result(e)
         return result
 
     async def get_confirmed_balance(self, address: str) -> Result[int]:
         return (await self.get_address(address)).and_then(
-            lambda a: Result.success(a.chain_stats.funded_txo_sum - a.chain_stats.spent_txo_sum)
+            lambda a: Result.ok(a.chain_stats.funded_txo_sum - a.chain_stats.spent_txo_sum)
         )
 
     async def get_utxo(self, address: str) -> Result[list[Utxo]]:
-        result: Result[list[Utxo]] = Result.failure("not started yet")
+        result: Result[list[Utxo]] = Result.err("not started yet")
         for _ in range(self.attempts):
             res = await self._request(f"/address/{address}/utxo")
             try:
-                return res.to_result_success([Utxo(**out) for out in res.parse_json_body()])
+                return res.to_ok_result([Utxo(**out) for out in res.parse_json_body()])
             except Exception as e:
-                result = res.to_result_failure(e)
+                result = res.to_err_result(e)
         return result
 
     async def get_mempool(self) -> Result[Mempool]:
-        result: Result[Mempool] = Result.failure("not started yet")
+        result: Result[Mempool] = Result.err("not started yet")
         for _ in range(self.attempts):
             res = await self._request("/mempool")
             try:
-                return res.to_result_success(Mempool(**res.parse_json_body()))
+                return res.to_ok_result(Mempool(**res.parse_json_body()))
             except Exception as e:
-                result = res.to_result_failure(e)
+                result = res.to_err_result(e)
         return result
 
     async def _request(self, url: str) -> HttpResponse:
