@@ -1,7 +1,13 @@
+import os
+
 import pytest
-from mm_crypto_utils.proxy import fetch_proxies_or_fatal_sync
-from mm_std import get_dotenv
+from dotenv import load_dotenv
+from mm_cryptocurrency import fetch_proxies_sync
 from typer.testing import CliRunner
+
+load_dotenv()
+
+PROXIES_URL = os.getenv("PROXIES_URL")
 
 
 @pytest.fixture()
@@ -26,7 +32,7 @@ def binance_address() -> str:
 
 @pytest.fixture
 def proxies() -> list[str]:
-    return fetch_proxies_or_fatal_sync(get_dotenv("PROXIES_URL"))
+    return fetch_proxies_sync(PROXIES_URL).unwrap("cannot fetch proxies")
 
 
 @pytest.fixture

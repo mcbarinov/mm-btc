@@ -1,7 +1,8 @@
 from pathlib import Path
 
+import mm_print
 from bit import PrivateKey, PrivateKeyTestnet
-from mm_std import BaseConfig, print_console
+from mm_cryptocurrency import BaseConfig
 
 from mm_btc.wallet import is_testnet_address
 
@@ -24,4 +25,4 @@ def run(config_path: Path) -> None:
     outputs = [(o.address, o.amount, "satoshi") for o in config.outputs]
 
     tx = key.create_transaction(outputs)
-    print_console(tx)
+    mm_print.print_json(tx)

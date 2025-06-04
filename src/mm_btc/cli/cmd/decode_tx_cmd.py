@@ -1,8 +1,8 @@
-from mm_std import print_json
+import mm_print
 
 from mm_btc.tx import decode_tx
 
 
 def run(tx_hex: str, testnet: bool = False) -> None:
     res = decode_tx(tx_hex, testnet)
-    print_json(res)
+    mm_print.print_json(res)

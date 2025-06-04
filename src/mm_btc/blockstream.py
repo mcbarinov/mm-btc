@@ -1,6 +1,8 @@
 from collections.abc import Sequence
 
-from mm_std import HttpResponse, Result, http_request, random_str_choice
+from mm_cryptocurrency import random_proxy
+from mm_http import HttpResponse, http_request
+from mm_result import Result
 from pydantic import BaseModel
 
 MAINNET_BASE_URL = "https://blockstream.info/api"
@@ -99,4 +101,4 @@ class BlockstreamClient:
         return result
 
     async def _request(self, url: str) -> HttpResponse:
-        return await http_request(f"{self.base_url}{url}", timeout=self.timeout, proxy=random_str_choice(self.proxies))
+        return await http_request(f"{self.base_url}{url}", timeout=self.timeout, proxy=random_proxy(self.proxies))

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from mm_std import print_plain
+import mm_print
 
 from mm_btc.wallet import AddressType, derive_accounts, generate_mnemonic
 
@@ -29,12 +29,12 @@ def run(args: Args) -> None:
     path = get_derivation_path_prefix(args.path, args.testnet)
     accounts = derive_accounts(mnemonic, passphrase, path, args.address_type, args.limit)
 
-    print_plain(f"{mnemonic}")
+    mm_print.print_plain(f"{mnemonic}")
     if passphrase:
-        print_plain(f"{passphrase}")
+        mm_print.print_plain(f"{passphrase}")
     for acc in accounts:
         private = acc.private if args.hex else acc.wif
-        print_plain(f"{acc.path} {acc.address} {private}")
+        mm_print.print_plain(f"{acc.path} {acc.address} {private}")
 
 
 def get_derivation_path_prefix(path: str, testnet: bool) -> str:
