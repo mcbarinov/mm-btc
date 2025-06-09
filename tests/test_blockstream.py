@@ -19,11 +19,11 @@ async def test_get_address(binance_address, proxies):
 
     # invalid address
     res = await client.get_address("bc1pa48c294qk7yd7sc8y0wxydc3a2frv5j83e65rvm48v3ej098s5zs8kvh5d")
-    assert res.expect_error() == blockstream.ERROR_400_BAD_REQUEST
+    assert res.unwrap_err() == blockstream.ERROR_400_BAD_REQUEST
 
     # invalid network
     res = await client.get_address("mqkwWDWdgXhYunfoKvQfYyydwB5vdma3cK")
-    assert res.expect_error() == blockstream.ERROR_400_BAD_REQUEST
+    assert res.unwrap_err() == blockstream.ERROR_400_BAD_REQUEST
 
 
 async def test_get_confirmed_balance(binance_address, proxies):

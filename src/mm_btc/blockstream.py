@@ -69,14 +69,14 @@ class BlockstreamClient:
             res = await self._request(f"/address/{address}")
             try:
                 if res.status_code == 400:
-                    return res.to_err("400 Bad Request")
-                return res.to_ok(Address(**res.parse_json_body()))
+                    return res.to_result_err("400 Bad Request")
+                return res.to_result_ok(Address(**res.parse_json_body()))
             except Exception as e:
-                result = res.to_err(e)
+                result = res.to_result_err(e)
         return result
 
     async def get_confirmed_balance(self, address: str) -> Result[int]:
-        return (await self.get_address(address)).and_then(
+        return (await self.get_address(address)).chain(
             lambda a: Result.ok(a.chain_stats.funded_txo_sum - a.chain_stats.spent_txo_sum)
         )
 
@@ -85,9 +85,9 @@ class BlockstreamClient:
         for _ in range(self.attempts):
             res = await self._request(f"/address/{address}/utxo")
             try:
-                return res.to_ok([Utxo(**out) for out in res.parse_json_body()])
+                return res.to_result_ok([Utxo(**out) for out in res.parse_json_body()])
             except Exception as e:
-                result = res.to_err(e)
+                result = res.to_result_err(e)
         return result
 
     async def get_mempool(self) -> Result[Mempool]:
@@ -95,9 +95,9 @@ class BlockstreamClient:
         for _ in range(self.attempts):
             res = await self._request("/mempool")
             try:
-                return res.to_ok(Mempool(**res.parse_json_body()))
+                return res.to_result_ok(Mempool(**res.parse_json_body()))
             except Exception as e:
-                result = res.to_err(e)
+                result = res.to_result_err(e)
         return result
 
     async def _request(self, url: str) -> HttpResponse:
