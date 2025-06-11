@@ -5,7 +5,6 @@ from typing import Annotated
 
 import mm_print
 import typer
-import typer.core
 
 from mm_btc.wallet import AddressType
 
@@ -68,7 +67,7 @@ def utxo_command(address: str) -> None:
 
 def version_callback(value: bool) -> None:
     if value:
-        mm_print.print_plain(f"mm-btc: v{importlib.metadata.version('mm-btc')}")
+        mm_print.plain(f"mm-btc: v{importlib.metadata.version('mm-btc')}")
         raise typer.Exit
 
 
