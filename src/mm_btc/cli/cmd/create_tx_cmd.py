@@ -2,13 +2,13 @@ from pathlib import Path
 
 import mm_print
 from bit import PrivateKey, PrivateKeyTestnet
-from mm_cryptocurrency import CryptocurrencyConfig
+from mm_web3 import Web3CliConfig
 
 from mm_btc.wallet import is_testnet_address
 
 
-class Config(CryptocurrencyConfig):
-    class Output(CryptocurrencyConfig):
+class Config(Web3CliConfig):
+    class Output(Web3CliConfig):
         address: str
         amount: int
 

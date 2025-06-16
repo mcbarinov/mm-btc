@@ -1,8 +1,8 @@
 from collections.abc import Sequence
 
-from mm_cryptocurrency import random_proxy
 from mm_http import HttpResponse, http_request
 from mm_result import Result
+from mm_web3 import random_proxy
 from pydantic import BaseModel
 
 MAINNET_BASE_URL = "https://blockstream.info/api"

@@ -141,8 +141,7 @@ Supported Bitcoin address types:
 - `bitcoinlib` - Bitcoin utilities
 - `mnemonic` - BIP39 mnemonic generation
 - `typer` - CLI framework
-- `mm-print` - Pretty printing utilities
-- `mm-cryptocurrency` - Cryptocurrency utilities
+- `mm-web3` - Cryptocurrency utilities
 
 
 ## References

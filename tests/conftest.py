@@ -2,7 +2,7 @@ import os
 
 import pytest
 from dotenv import load_dotenv
-from mm_cryptocurrency import fetch_proxies_sync
+from mm_web3 import fetch_proxies_sync
 from typer.testing import CliRunner
 
 load_dotenv()
