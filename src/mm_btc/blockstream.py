@@ -70,7 +70,7 @@ class BlockstreamClient:
             try:
                 if res.status_code == 400:
                     return res.to_result_err("400 Bad Request")
-                return res.to_result_ok(Address(**res.parse_json_body()))
+                return res.to_result_ok(Address(**res.parse_json()))
             except Exception as e:
                 result = res.to_result_err(e)
         return result
@@ -85,7 +85,7 @@ class BlockstreamClient:
         for _ in range(self.attempts):
             res = await self._request(f"/address/{address}/utxo")
             try:
-                return res.to_result_ok([Utxo(**out) for out in res.parse_json_body()])
+                return res.to_result_ok([Utxo(**out) for out in res.parse_json()])
             except Exception as e:
                 result = res.to_result_err(e)
         return result
@@ -95,7 +95,7 @@ class BlockstreamClient:
         for _ in range(self.attempts):
             res = await self._request("/mempool")
             try:
-                return res.to_result_ok(Mempool(**res.parse_json_body()))
+                return res.to_result_ok(Mempool(**res.parse_json()))
             except Exception as e:
                 result = res.to_result_err(e)
         return result

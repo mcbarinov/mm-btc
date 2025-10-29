@@ -7,8 +7,6 @@ from typer.testing import CliRunner
 
 load_dotenv()
 
-PROXIES_URL = os.getenv("PROXIES_URL")
-
 
 @pytest.fixture()
 def mnemonic() -> str:
@@ -30,9 +28,17 @@ def binance_address() -> str:
     return "34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo"
 
 
+@pytest.fixture()
+def proxies_url() -> str:
+    res = os.getenv("PROXIES_URL")
+    if not res:
+        raise ValueError("PROXIES_URL env var is not set")
+    return res
+
+
 @pytest.fixture
-def proxies() -> list[str]:
-    return fetch_proxies_sync(PROXIES_URL).unwrap("cannot fetch proxies")
+def proxies(proxies_url) -> list[str]:
+    return fetch_proxies_sync(proxies_url).unwrap("cannot fetch proxies")
 
 
 @pytest.fixture
