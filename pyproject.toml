@@ -1,15 +1,15 @@
 [project]
 name = "mm-btc"
-version = "0.5.5"
+version = "0.5.6"
 description = ""
 requires-python = ">=3.13"
 dependencies = [
-    "mm-web3~=0.5.4",
+    "mm-web3~=0.5.6",
     "hdwallet~=3.6.1",
     "bit~=0.8.0",
-    "bitcoinlib~=0.7.5",
+    "bitcoinlib~=0.7.6",
     "mnemonic~=0.21",
-    "typer~=0.20.0",
+    "typer~=0.21.1",
 ]
 [project.scripts]
 mm-btc = "mm_btc.cli.cli:app"
@@ -21,13 +21,13 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
-    "pytest~=8.4.2",
-    "pytest-asyncio~=1.2.0",
+    "bandit~=1.9.2",
+    "mypy~=1.19.1",
+    "pip-audit~=2.10.0",
+    "pytest~=9.0.2",
+    "pytest-asyncio~=1.3.0",
     "pytest-xdist~=3.8.0",
-    "ruff~=0.14.2",
-    "pip-audit~=2.9.0",
-    "bandit~=1.8.6",
-    "mypy~=1.18.2",
+    "ruff~=0.14.11",
     "python-dotenv~=1.2.0",
 ]
 
