@@ -57,7 +57,6 @@ ignore = [
     "A005",    # flake8-builtins: stdlib-module-shadowing
     "ERA001",  # eradicate: commented-out-code
     "PT",      # flake8-pytest-style
-    "D",       # pydocstyle
     "FIX",     # flake8-fixme
     "PLR0911", # pylint: too-many-return-statements
     "PLR0912", # pylint: too-many-branches
@@ -74,6 +73,8 @@ ignore = [
     "TD003",   # flake8-todos: missing-todo-link
     "RET503",  # flake8-return: implicit-return
     "COM812",  # it's used in ruff formatter
+    "D203",    # pydocstyle: one-blank-line-before-class (conflicts with D211)
+    "D213",    # pydocstyle: multi-line-summary-second-line (conflicts with D212)
 ]
 [tool.ruff.lint.pep8-naming]
 classmethod-decorators = ["field_validator"]

@@ -1,3 +1,5 @@
+"""Tests for wallet operations."""
+
 from mm_btc.wallet import (
     BIP44_MAINNET_PATH,
     BIP44_TESTNET_PATH,
@@ -10,6 +12,7 @@ from mm_btc.wallet import (
 
 
 def test_generate_mnemonic():
+    """Test mnemonic generation."""
     mnemonic = generate_mnemonic(words=24)
     assert len(mnemonic.split()) == 24
 
@@ -17,6 +20,7 @@ def test_generate_mnemonic():
 
 
 def test_derive_accounts(mnemonic, passphrase):
+    """Test account derivation from mnemonic."""
     # mainnet bip44
     accs = derive_accounts(mnemonic, passphrase, BIP44_MAINNET_PATH, AddressType.P2PKH, 2)
     assert accs[1].path == "m/44'/0'/0'/0/1"

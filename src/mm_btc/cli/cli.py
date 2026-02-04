@@ -27,7 +27,7 @@ def mnemonic_command(  # nosec B107:hardcoded_password_default — empty string 
     limit: int = typer.Option(10, "--limit", "-l"),
     testnet: bool = typer.Option(False, "--testnet", "-t", help="Testnet network"),
 ) -> None:
-    """Generate keys based on a mnemonic"""
+    """Generate keys based on a mnemonic."""
     mnemonic_cmd.run(
         mnemonic_cmd.Args(
             mnemonic=mnemonic,
@@ -45,25 +45,25 @@ def mnemonic_command(  # nosec B107:hardcoded_password_default — empty string 
 @app.command(name="address")
 @app.command(name="a", hidden=True)
 def address_command(address: str) -> None:
-    """Get address info from Blockstream API"""
+    """Get address info from Blockstream API."""
     asyncio.run(address_cmd.run(address))
 
 
 @app.command("create-tx")
 def create_tx_command(config_path: Annotated[Path, typer.Argument(exists=True)]) -> None:
-    """Create a transaction"""
+    """Create a transaction."""
     create_tx_cmd.run(config_path)
 
 
 @app.command("decode-tx")
 def decode_tx_command(tx_hex: str, testnet: Annotated[bool, typer.Option("--testnet", "-t")] = False) -> None:
-    """Decode a transaction"""
+    """Decode a transaction."""
     decode_tx_cmd.run(tx_hex, testnet)
 
 
 @app.command("utxo")
 def utxo_command(address: str) -> None:
-    """Get UTXOs from Blockstream API"""
+    """Get UTXOs from Blockstream API."""
     asyncio.run(utxo_cmd.run(address))
 
 

@@ -1,3 +1,5 @@
+"""Tests for Blockstream API client."""
+
 import pytest
 
 from mm_btc import blockstream
@@ -7,6 +9,7 @@ pytestmark = pytest.mark.asyncio
 
 
 async def test_get_address(binance_address, proxies):
+    """Test address info retrieval from Blockstream API."""
     client = BlockstreamClient(proxies=proxies, timeout=5, attempts=5)
 
     # non-empty address
@@ -27,6 +30,7 @@ async def test_get_address(binance_address, proxies):
 
 
 async def test_get_confirmed_balance(binance_address, proxies):
+    """Test confirmed balance retrieval."""
     client = BlockstreamClient(proxies=proxies)
     res = await client.get_confirmed_balance(binance_address)
     assert res.unwrap() > 0
