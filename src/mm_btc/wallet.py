@@ -1,5 +1,7 @@
+"""Bitcoin wallet operations: mnemonic generation, HD key derivation, and address utilities."""
+
 from dataclasses import dataclass
-from enum import Enum, unique
+from enum import StrEnum, unique
 
 from hdwallet import HDWallet
 from hdwallet.cryptocurrencies import Bitcoin
@@ -8,6 +10,7 @@ from hdwallet.hds import BIP32HD
 from hdwallet.mnemonics import BIP39Mnemonic
 from mnemonic import Mnemonic
 
+# BIP44/BIP84 standard derivation path prefixes for mainnet and testnet.
 BIP44_MAINNET_PATH = "m/44'/0'/0'/0"
 BIP44_TESTNET_PATH = "m/44'/1'/0'/0"
 BIP84_MAINNET_PATH = "m/84'/0'/0'/0"
@@ -16,6 +19,8 @@ BIP84_TESTNET_PATH = "m/84'/1'/0'/0"
 
 @dataclass
 class Account:
+    """Derived Bitcoin account with address, private key, WIF, and derivation path."""
+
     address: str
     private: str
     wif: str
@@ -23,7 +28,9 @@ class Account:
 
 
 @unique
-class AddressType(str, Enum):
+class AddressType(StrEnum):
+    """Supported Bitcoin address types."""
+
     P2PKH = "P2PKH"  # Pay to Public Key Hash
     P2SH = "P2SH"  # Pay to Script Hash
     P2TR = "P2TR"  # Taproot
@@ -34,10 +41,12 @@ class AddressType(str, Enum):
 
 
 def generate_mnemonic(language: str = "english", words: int = 12) -> str:
-    return Mnemonic(language).generate(strength=mnemonic_words_to_strenght(words))
+    """Generate a BIP39 mnemonic phrase."""
+    return Mnemonic(language).generate(strength=mnemonic_words_to_strength(words))
 
 
 def derive_accounts(mnemonic: str, passphrase: str, path_prefix: str, address_type: AddressType, limit: int) -> list[Account]:
+    """Derive multiple Bitcoin accounts from a mnemonic using HD wallet derivation."""
     coin = Bitcoin
     if path_prefix.startswith(("m/84'/1'", "m/44'/1'")):
         network = coin.NETWORKS.TESTNET
@@ -56,13 +65,19 @@ def derive_accounts(mnemonic: str, passphrase: str, path_prefix: str, address_ty
         wallet.clean_derivation()
         path = f"{path_prefix}/{index_path}"
         w = wallet.from_derivation(derivation=CustomDerivation(path=path))
-        accounts.append(Account(address=w.address(address_type), private=w.private_key(), wif=w.wif(), path=path))
+        address = w.address(address_type)
+        private = w.private_key()
+        wif = w.wif()
+        if address is None or private is None or wif is None:
+            raise ValueError(f"Failed to derive wallet data for path: {path}")
+        accounts.append(Account(address=address, private=private, wif=wif, path=path))
         w.clean_derivation()
 
     return accounts
 
 
-def mnemonic_words_to_strenght(words: int) -> int:
+def mnemonic_words_to_strength(words: int) -> int:
+    """Convert mnemonic word count to BIP39 entropy strength in bits."""
     if words == 12:
         return 128
     if words == 15:
@@ -78,4 +93,5 @@ def mnemonic_words_to_strenght(words: int) -> int:
 
 
 def is_testnet_address(address: str) -> bool:
+    """Check if a Bitcoin address belongs to testnet based on its prefix."""
     return address.startswith(("m", "n", "tb1"))

@@ -1,18 +1,24 @@
-from dataclasses import dataclass
-from enum import Enum
+"""CLI handler for the mnemonic command — generates and displays HD wallet keys."""
 
-import mm_print
+from dataclasses import dataclass
+from enum import StrEnum
+
+from mm_print import print_plain
 
 from mm_btc.wallet import AddressType, derive_accounts, generate_mnemonic
 
 
-class PrivateType(str, Enum):
+class PrivateType(StrEnum):
+    """Output format for private keys."""
+
     hex = "hex"
     wif = "wif"
 
 
 @dataclass
 class Args:
+    """Arguments for the mnemonic command."""
+
     mnemonic: str
     passphrase: str
     words: int
@@ -24,20 +30,22 @@ class Args:
 
 
 def run(args: Args) -> None:
+    """Execute the mnemonic command: generate or use a mnemonic and print derived accounts."""
     mnemonic = args.mnemonic or generate_mnemonic()
     passphrase = args.passphrase
     path = get_derivation_path_prefix(args.path, args.testnet)
     accounts = derive_accounts(mnemonic, passphrase, path, args.address_type, args.limit)
 
-    mm_print.plain(f"{mnemonic}")
+    print_plain(f"{mnemonic}")
     if passphrase:
-        mm_print.plain(f"{passphrase}")
+        print_plain(f"{passphrase}")
     for acc in accounts:
         private = acc.private if args.hex else acc.wif
-        mm_print.plain(f"{acc.path} {acc.address} {private}")
+        print_plain(f"{acc.path} {acc.address} {private}")
 
 
 def get_derivation_path_prefix(path: str, testnet: bool) -> str:
+    """Resolve a path alias (bip44, bip84) or custom path to a full derivation path prefix."""
     if path.startswith("m/"):
         return path
     coin = "1" if testnet else "0"

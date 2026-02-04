@@ -1,10 +1,12 @@
+"""CLI entry point for mm-btc commands."""
+
 import asyncio
 import importlib.metadata
 from pathlib import Path
 from typing import Annotated
 
-import mm_print
 import typer
+from mm_print import print_plain
 
 from mm_btc.wallet import AddressType
 
@@ -15,7 +17,7 @@ app = typer.Typer(no_args_is_help=True, pretty_exceptions_enable=False, add_comp
 
 @app.command("mnemonic")
 @app.command(name="m", hidden=True)
-def mnemonic_command(  # nosec B107:hardcoded_password_default
+def mnemonic_command(  # nosec B107:hardcoded_password_default — empty string is a safe default, actual passphrase is user-provided
     mnemonic: Annotated[str, typer.Option("--mnemonic", "-m", help="")] = "",
     passphrase: Annotated[str, typer.Option("--passphrase", "-p")] = "",
     path: Annotated[str, typer.Option("--path", help="Derivation path. Examples: bip44, bip88, m/44'/0'/0'/0")] = "bip44",
@@ -66,15 +68,16 @@ def utxo_command(address: str) -> None:
 
 
 def version_callback(value: bool) -> None:
+    """Print the version and exit when --version flag is passed."""
     if value:
-        mm_print.plain(f"mm-btc: v{importlib.metadata.version('mm-btc')}")
+        print_plain(f"mm-btc: v{importlib.metadata.version('mm-btc')}")
         raise typer.Exit
 
 
 @app.callback()
 def main(_version: bool = typer.Option(None, "--version", callback=version_callback, is_eager=True)) -> None:
-    pass
+    """mm-btc CLI application root callback."""
 
 
-if __name__ == "__main_":
+if __name__ == "__main__":
     app()
